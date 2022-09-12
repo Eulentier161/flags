@@ -1,4 +1,13 @@
-import { AppBar, Button, Container, LinearProgress, Toolbar, Typography } from '@mui/material';
+import {
+  AppBar,
+  Button,
+  Container,
+  IconButton,
+  LinearProgress,
+  Toolbar,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import FlagIcon from '@mui/icons-material/Flag';
 import sample from 'lodash.sample';
@@ -12,6 +21,8 @@ export default function Home() {
   const [current, setCurrent] = useState<[string, string]>();
   const [options, setOptions] = useState<string[]>();
   const [score, setScore] = useState(0);
+
+  const matches = useMediaQuery('(min-width:800px)');
 
   useEffect(() => {
     const right = sample(Object.entries(countryMapping))!;
@@ -48,17 +59,29 @@ export default function Home() {
       <AppBar sx={{ marginBottom: '1em' }} position='relative' color='transparent'>
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Link href='https://flagpedia.net' passHref>
-            <Button color='inherit' variant='outlined' startIcon={<FlagIcon />}>
-              Flags
-            </Button>
+            {matches ? (
+              <Button color='inherit' variant='outlined' startIcon={<FlagIcon />}>
+                Flags
+              </Button>
+            ) : (
+              <IconButton color='inherit'>
+                <FlagIcon />
+              </IconButton>
+            )}
           </Link>
           <Typography variant='h4' component='h1'>
             Flag Game
           </Typography>
           <Link href='https://github.com/Eulentier161/flags' passHref>
-            <Button color='inherit' variant='outlined' startIcon={<GitHubIcon />}>
-              GitHub
-            </Button>
+            {matches ? (
+              <Button color='inherit' variant='outlined' startIcon={<GitHubIcon />}>
+                GitHub
+              </Button>
+            ) : (
+              <IconButton color='inherit'>
+                <GitHubIcon />
+              </IconButton>
+            )}
           </Link>
         </Toolbar>
       </AppBar>
