@@ -19,7 +19,7 @@ import { countryMapping } from '../utils/countries';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 const reqSvgs = require.context('../public/flags');
 const svgs = reqSvgs.keys().reduce((acc, cur) => {
-  acc[cur.substring(2, 4)] = reqSvgs(cur);
+  acc[cur.substring(2).split(".")[0]] = reqSvgs(cur);
   return acc;
 }, {} as { [key: string]: StaticImport });
 
