@@ -10,6 +10,9 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED 1
 RUN yarn build
 FROM --platform=linux/amd64 node:16-alpine3.17 AS runner
+LABEL org.opencontainers.image.source=https://github.com/Eulentier161/flags
+LABEL org.opencontainers.image.description="dockerized flag game pwa"
+LABEL org.opencontainers.image.licenses=MIT
 WORKDIR /app
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
