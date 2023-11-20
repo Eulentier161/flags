@@ -16,6 +16,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { countryMapping } from '../utils/countries';
+import { StaticImport } from 'next/dist/shared/lib/get-img-props';
+const reqSvgs = require.context('../public/flags');
+const svgs = reqSvgs.keys().reduce((acc, cur) => {
+  acc[cur.substring(2, 4)] = reqSvgs(cur);
+  return acc;
+}, {} as { [key: string]: StaticImport });
 
 export default function Home() {
   const [current, setCurrent] = useState<[string, string]>();
@@ -54,7 +60,7 @@ export default function Home() {
           zIndex: -1,
         }}
       >
-        <Image alt='' src={`/flags/${current[0]}.svg`} layout='fill' objectFit='cover' />
+        <Image alt='background' src={svgs[current[0]]} layout='fill' objectFit='cover' />
       </div>
       <AppBar sx={{ marginBottom: '1em' }} position='relative' color='transparent'>
         <Toolbar sx={{ justifyContent: 'space-between' }}>
@@ -92,8 +98,11 @@ export default function Home() {
           alignItems: 'center',
         }}
       >
-        <Image alt='flag' src={`/flags/${current[0]}.svg`} height={400} width={600} />
-        <Typography sx={{ fontWeight: 'bold' }}>Score: {score}</Typography>
+        {matches ? 
+        <Image alt='flag' src={svgs[current[0]]} style={{width: "60%"}} />
+        :
+        <Image alt='flag' src={svgs[current[0]]} style={{width: "100%"}} />
+        }<Typography sx={{ fontWeight: 'bold' }}>Score: {score}</Typography>
         <Container
           sx={{
             display: 'flex',
